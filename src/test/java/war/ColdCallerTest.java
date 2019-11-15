@@ -9,7 +9,6 @@ import static org.hamcrest.CoreMatchers.hasItem;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
-import static org.hamcrest.CoreMatchers.is;
 
 
 public class ColdCallerTest {
@@ -68,12 +67,15 @@ public class ColdCallerTest {
         names.add("Tom");
         names.add("Tom's little brother Nemo");
         names.add("Tom's cousin Antwoinetta");
+
+        //get name and make sure we get a name from the array
         String called = caller.getStudentName(names.toArray(new String[0]));
 
         assertThat(names, hasItem(called));
 
         calledNames.add(called);
 
+        //get name and make sure we get a name from the array, but not one we already got
         called = caller.getStudentName(names.toArray(new String[0]));
 
         assertThat(names, hasItem(called));
@@ -81,10 +83,18 @@ public class ColdCallerTest {
 
         calledNames.add(called);
 
+        //get name and make sure we get a name from the array, but not one we already got
         called = caller.getStudentName(names.toArray(new String[0]));
 
         assertThat(names, hasItem(called));
         assertFalse(calledNames.contains(called));
+
+        calledNames.add(called);
+
+        //get name and make sure we get a name from the array after we called all names
+        called = caller.getStudentName(names.toArray(new String[0]));
+
+        assertThat(names, hasItem(called));
 
     }
 
